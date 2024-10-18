@@ -4,14 +4,14 @@
 //-------------------------------------------------
 
 ServerHost = localhost
-ServerPort = 9001
-Community  = alfa
+ServerPort = 9002 
+Community  = bravo
 
 MOOSTimeWarp = 10
 
 // Sepetiba
-LatOrigin  = -22.93705
-LongOrigin = -43.83953
+LatOrigin = -22.9269 
+LongOrigin = -43.867 
 
 //------------------------------------------
 // Antler configuration  block
@@ -21,20 +21,17 @@ ProcessConfig = ANTLER
 
   Run = MOOSDB          @ NewConsole = false
   Run = uXMS            @ NewConsole = false
-  //Run = pLogger      @ NewConsole = false
+  Run = pLogger      @ NewConsole = false
   Run = pHelmIvP        @ NewConsole = false
   Run = pNodeReporter   @ NewConsole = false
   Run = ./iPydyna.py    @ NewConsole = false
-  // Run = python /home/vicente/TCC/Python/iPydyna.py /home/vicente/TCC/Interface/model_ship.moos	@ NewConsole = false
   Run = ./pTrajectPID.py @ NewConsole = false
-  // Run = python pTrajectPID.py /home/vicente/TCC/Interface/model_ship.moos    @ NewConsole = false	
-  // Run = iPydyna    @ NewConsole = false  // acrescentei 
   // Run = ./plotter.py    @ NewConsole = false
-  // Run = pSimIMU   @ NewConsole = false  // comentei a aqui -->
+  // Run = pSimIMU   @ NewConsole = false
   // Run = pSimGPS    @ NewConsole = false
   // Run = pSimDVL    @ NewConsole = false
   // Run = pSimGyro    @ NewConsole = false
-  // Run = pSensor    @ NewConsole = false // até aqui <--
+  // Run = pSensor    @ NewConsole = false
   //Run = iRemoteMod    @ NewConsole = true
   Run = pShare @ NewConsole = false
   Run = pHostInfo       @ NewConsole = false
@@ -112,7 +109,7 @@ ProcessConfig = pShare
   AppTick    = 2
   CommsTick  = 2
 
-  input = route =  localhost:9201
+input = route =  localhost:9202
 }
 
 //--------------------------------------------------
@@ -154,9 +151,9 @@ ProcessConfig = iPydyna
 {
    AppTick   = 4
    CommsTick = 4
-START_X = 900.0 
-START_Y = -900.0 
-START_HEADING = 90.0 
+START_X = 1605.0 
+START_Y = -1185.0 
+START_HEADING = 0.0 
 }
 
 //------------------------------------------------
@@ -284,8 +281,7 @@ ProcessConfig = pHelmIvP
   bhv_dir_not_found_ok = true
   ok_skew = any
 
-  //behaviors  = alfa.bhv
-  behaviors  = model_ship.bhv
+behaviors  = bravo.bhv
   domain     = course:0:359:360
   domain     = speed:0:7:99
 }
