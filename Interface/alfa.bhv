@@ -169,6 +169,7 @@ Behavior = BHV_AvdColregsV19
         use_refinery = true
 
       pwt_outer_dist = 105
+      //pwt_outer_dist = 200
       pwt_inner_dist = 30
       completed_dist = 200
    min_util_cpa_dist = 30
@@ -198,6 +199,7 @@ Behavior = BHV_AvoidCollision
                decay = 30,60
 
         pwt_outer_dist = 75
+        //pwt_outer_dist = 200
         pwt_inner_dist = 15
         completed_dist = 200
      min_util_cpa_dist = 15

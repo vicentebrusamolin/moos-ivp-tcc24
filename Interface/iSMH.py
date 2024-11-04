@@ -49,8 +49,10 @@ class Ship(pymoos.comms):
         
 
         self.pid = '911'
-        self.server_addr = '172.16.11.38'
-        self.db_conn_str = 'mongodb://172.16.11.10:27017'
+        #self.server_addr = '172.16.11.38'
+        self.server_addr = '172.16.11.37'
+        #self.db_conn_str = 'mongodb://172.16.11.10:27017'
+        self.db_conn_str = 'mongodb://10.1.1.176'
         self.db_name = 'smh'
         self.ds = pybuzz.create_bson_data_source(self.db_conn_str, self.db_name)
         self.session = pybuzz.join_simco_session(self.pid, pybuzz.create_bson_serializer(self.ds))

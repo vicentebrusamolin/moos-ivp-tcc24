@@ -54,8 +54,8 @@ Behavior = BHV_Waypoint
 
 
 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
+polygon = 12890.0,17320.0 : 13640.0,17740.0 : 14045.0,18430.0 : 14300.0,18820.0 : 14720.0,19510.0 : 14975.0,20140.0 : 15275.0,20530.0 : 15725.0,20935.0 : 16265.0,21280.0 : 16505.0,21430.0 : 16730.0,21650.0 : 16790.0,21805.0 
+ 
              repeat = 0
 
 
@@ -89,7 +89,7 @@ polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.
          outer_radius = 30      
          outer_speed  = 1    
        transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+station_pt = 16955.0, 21940.0 
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -135,7 +135,7 @@ Behavior = BHV_StationKeep
          outer_radius = 30      
          outer_speed  = 1    
        transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+station_pt = 16955.0, 22040.0 
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -168,8 +168,7 @@ Behavior = BHV_AvdColregsV19
         giveway_bow_dist = 30
         use_refinery = true
 
-      //pwt_outer_dist = 105
-      pwt_outer_dist = 200
+      pwt_outer_dist = 105
       pwt_inner_dist = 30
       completed_dist = 200
    min_util_cpa_dist = 30
@@ -198,8 +197,7 @@ Behavior = BHV_AvoidCollision
          extrapolate = true
                decay = 30,60
 
-        //pwt_outer_dist = 75
-        pwt_outer_dist = 200
+        pwt_outer_dist = 75
         pwt_inner_dist = 15
         completed_dist = 200
      min_util_cpa_dist = 15

@@ -1,0 +1,369 @@
+//-------------------------------------------------
+// NAME: L. H. S. Caldas, USP
+// FILE: alfa.moos
+//-------------------------------------------------
+
+ServerHost = localhost
+ServerPort = 9001
+Community  = alfa
+
+MOOSTimeWarp = 10
+
+// Sepetiba
+LatOrigin  = -23.125
+LongOrigin = -44.016667
+
+//------------------------------------------
+// Antler configuration  block
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB          @ NewConsole = false
+  //Run = uXMS            @ NewConsole = false
+  //Run = pLogger      @ NewConsole = false
+  Run = pHelmIvP        @ NewConsole = false
+  //Run = ./iPydyna2.py    @ NewConsole = false
+  //Run = ./iSMH3.py    @ NewConsole = true 	// esse seria o iSMH2.py do Caldas
+  Run = ./iSMH.py    @ NewConsole = true	//usar esse para simulação com alfa.moos
+  Run = ./pTrajectPID.py @ NewConsole = false
+  // Run = ./plotter.py    @ NewConsole = false
+  //Run = pSimIMU   @ NewConsole = false
+  //Run = pSimGPS    @ NewConsole = false
+  //Run = pSimDVL    @ NewConsole = false
+  //Run = pSimGyro    @ NewConsole = false
+  //Run = pSensor    @ NewConsole = false
+  //Run = iRemoteMod    @ NewConsole = true
+  //Run = pMarineViewer   @ NewConsole = false, ExtraProcessParams=one
+  // Run = uProcessWatch  @ NewConsole = false
+  Run = pNodeReporter   @ NewConsole = false
+
+  Run = pShare @ NewConsole = false
+  Run = pHostInfo       @ NewConsole = false
+  Run = uFldNodeBroker  @ NewConsole = false
+  Run = pContactMgrV20     @ NewConsole = false
+
+   one = --size=800x600
+
+}
+
+
+//------------------------------------------
+// uProcessWatch config block
+
+ProcessConfig = uProcessWatch                                   
+{                                                               
+   AppTick   = 4                                                 
+   CommsTick = 4                                                 
+                                                               
+   watch_all = true   // The default is true.                    
+                                                                
+  nowatch = uXMS*,                                                
+                                                               
+  allow_retractions = true   // Always allow run-warnings to be 
+                       // retracted if proc re-appears    
+                                                                
+  // A negative value means summary only when status changes.   
+  summary_wait = 10 // Seconds. Default is -1.                  
+                                                             
+  post_mapping = PROC_WATCH_FULL_SUMMARY, UPW_FULL_SUMMARY      
+} 
+
+//------------------------------------------
+// uXMS config block
+
+ProcessConfig = uXMS
+{
+  AppTick   = 4
+  CommsTick = 4
+ //var    =   REAL_HEADING, REAL_SPEED, REAL_X, REAL_Y
+  display_source = true
+  //display_all = true
+  source = pContactMgrV20 
+
+}
+
+//------------------------------------------------
+// iPydyna config block
+
+ProcessConfig = iPydyna
+{
+   AppTick   = 4
+   CommsTick = 4
+START_X = 19000
+START_Y = 20100
+START_HEADING = 060.0 
+}
+
+//------------------------------------------------
+// pTrajectPID config block
+
+ProcessConfig = pTrajectPID
+{
+   AppTick   = 1
+   CommsTick = 1
+   yaw_kp = 3.6
+   yaw_ki = 0.9
+   yaw_kd = 3.6
+   max_rudder = 30
+   spd_kp = 3.044
+   spd_ki = 0.103
+   spd_kd = 0
+   max_rotation = 25.6
+}
+
+//------------------------------------------------
+// pSensor config block
+
+ProcessConfig = pSensor
+{
+   AppTick   = 4
+   CommsTick = 4
+   w_dvl_speed = 1
+   w_imu_speed = 1
+   w_gps_speed = 1
+   w_imu_pos = 1
+   w_gps_pos = 1
+   w_imu_hdg = 1
+   w_gyro_hdg = 1
+}
+
+//------------------------------------------------
+// pSimIMU config block
+
+ProcessConfig = pSimIMU
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
+
+//------------------------------------------------
+// pSimGPS config block
+
+ProcessConfig = pSimGPS
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
+//------------------------------------------------
+// pSimGyro config block
+
+ProcessConfig = pSimGyro
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
+//------------------------------------------------
+// pSimDVL config block
+
+ProcessConfig = pSimDVL
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
+//-----------------------------------------------------------------
+// iRemote config block
+
+ProcessConfig = iRemote
+{
+  CustomJournal = Name = DESIRED_RUDDER,Key =6, History = 10,Period = 0
+  CustomSummary = DESIRED_THRUST
+  CustomKey = 2 : JANITOR_SWITCH @ "ACTUATION:OFF"
+}
+
+//------------------------------------------
+// pLogger config block
+
+ProcessConfig = pLogger
+{
+  AppTick   = 8
+  CommsTick = 8
+
+  SyncLog = true
+
+  // For variables that are published in a bundle on their first post,
+  // explicitly declare their logging request
+  
+  Log = DESIRED_SPEED @ 0 NOSYNC
+  Log = REAL_SPEED @ 0 NOSYNC
+  Log = DESIRED_ROTATION @ 0 NOSYNC
+  Log = DESIRED_HEADING @ 0 NOSYNC
+  Log = REAL_HEADING  @ 0 NOSYNC
+  Log = DESIRED_RUDDER @ 0 NOSYNC
+
+
+  File = Log
+  FileTimeStamp = false
+
+  //Log = DESIRED_HEADING @ 0 NOSYNC
+  //Log = REAL_HEADING @ 0 NOSYNC
+  //Log = IMU_HEADING @ 0 NOSYNC
+  //Log = GYRO_HEADING @ 0 NOSYNC
+  
+  //Log = DESIRED_SPEED @ 0 NOSYNC
+  //Log = IMU_SPEED @ 0 NOSYNC
+  //Log = GPS_SPEED @ 0 NOSYNC
+  //Log = REAL_SPEED @ 0 NOSYNC
+  //Log = DVL_SPEED @ 0 NOSYNC
+
+
+}
+
+//------------------------------------------
+// pHelmIvP config block
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  bhv_dir_not_found_ok = true
+  ok_skew = any
+
+  behaviors  = alfa2.bhv
+  domain     = course:0:359:360
+  domain     = speed:0:7:99
+}
+
+//------------------------------------------
+// pNodeReporter config block
+
+ProcessConfig = pNodeReporter
+{
+  AppTick    = 2
+  CommsTick	 = 2
+
+  platform_type   = KAYAK
+  platform_color  = red
+  platform_length = 15
+  //alt_nav_prefix=REAL_
+  //alt_nav_name   = _REAL
+  //cross_fill_policy=fill-empty
+}
+
+//--------------------------------------------------------
+// pContactMgrV20 Configuration Block (Created from Plugin)
+
+ProcessConfig = pContactMgrV20
+{
+  AppTick   = 10
+  CommsTick = 10
+
+  decay = 30,60
+
+  alert_verbose = true
+
+  contact_max_age = 3600
+  display_radii   = true
+
+  alert_range_color = gray70
+  cpa_range_color   = gray30
+
+
+}
+
+//--------------------------------------------------
+// pHostInfo configuration block
+
+ProcessConfig = pHostInfo
+{
+  AppTick 	= 1
+  CommsTick 	= 1
+
+   default_hostip_force = localhost
+
+}
+
+//--------------------------------------------------
+// uFldNodeBroker configuration block from plugin
+
+ProcessConfig = uFldNodeBroker
+{
+  AppTick   = 1
+  CommsTick = 1
+
+  try_shore_host = pshare_route=localhost:9200
+
+  bridge = src=VIEW_POLYGON
+  bridge = src=VIEW_POINT
+  bridge = src=VIEW_SEGLIST
+  bridge = src=APPCAST
+  bridge = src=NODE_REPORT_LOCAL,  alias=NODE_REPORT
+  bridge = src=NODE_MESSAGE_LOCAL, alias=NODE_MESSAGE
+  //bridge =  src=USL_RANGE_REQUEST
+  //bridge =  src=USR_RANGE_REQUEST
+}
+
+
+//---------------------------------------------------------
+// pShare Config Block
+
+ProcessConfig = pShare
+{
+  AppTick    = 2
+  CommsTick  = 2
+
+  input = route =  localhost:9201
+}
+
+//------------------------------------------
+// pMarineViewer config block
+
+ProcessConfig = pMarineViewer
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  tiff_file            = itaguai.tif
+
+  set_pan_x            = -90
+  set_pan_y            = -220
+  zoom                 = 2
+  vehicle_shape_scale  = 2.5
+  hash_delta           = 100
+  hash_shade           = 0.4
+  hash_viewable        = true
+
+  trails_point_size   = 2
+  trails_color         = red
+  trails_length       = 200
+  vehicles_name_mode  = names
+  vehicles_name_color = black
+  center_view         = active
+
+  //vcolor = alpha=dodgerblue
+
+  // Appcast configuration
+  appcast_height       = 75
+  appcast_width        = 30
+  appcast_viewable     = true
+  appcast_color_scheme = indigo
+  nodes_font_size      = medium
+  procs_font_size      = medium
+  appcast_font_size    = small
+
+  //datum_viewable = true
+  //datum_size     = 18
+  //gui_size = small
+
+  button_one   = DEPLOY  # DEPLOY_ALL=true 
+  button_one   = MOOS_MANUAL_OVERRIDE_ALL=false 
+  button_one   = RETURN_ALL=false # STATION_KEEP_ALL=false
+  button_one   = END_ALL=false
+
+  button_two   = RETURN  # RETURN_ALL=true
+  button_two   = STATION_KEEP_ALL=false
+  button_two   = END_ALL=false
+
+  button_three = STATION  # STATION_KEEP_ALL=true
+
+  button_four = END # END_ALL=true
+  button_four  = RETURN_ALL=false # STATION_KEEP_ALL=false
+
+  infocast_viewable=true
+}
+

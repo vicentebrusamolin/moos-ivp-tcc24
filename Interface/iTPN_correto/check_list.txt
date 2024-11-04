@@ -1,0 +1,14 @@
+Rodar:
+
+- alfa.moos (missão principal)
+- mothership.moos (visualização)
+- port9001_alfa_gtw.moos (mandar dados de posição e rumo do ownship para ROS2)
+- port9000_alfagtw.moos (receber dados de contatos do ROS2)
+
+
+
+-----------------------
+
+> Interface para controle de embarcação obstáculo: http://172.16.11.182:53000/
+> Criar e iniciar simulação: http://172.16.11.37:54000/
+> Executar processo do CODESIM: http://172.16.11.37:5016

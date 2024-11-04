@@ -46,7 +46,7 @@ Behavior = BHV_Waypoint
                 lead = 30 
          lead_damper = 15
        lead_to_start = true
-               speed = 5  // meters per second
+               speed = 4  // meters per second
         capture_line = true
       capture_radius = 35 
          slip_radius = 30.0
@@ -54,8 +54,8 @@ Behavior = BHV_Waypoint
 
 
 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
+polygon = 19200.0,20200.0: 19600.0,20100.0 : 19600.0,20050.0 : 19200.0,20150.0 : 19200.0,20100.0 : 19600.0,20000.0 : 19600.0,19950.0 : 19200.0,20050.0 :  19200.0,20000.0 : 19600.0,19900.0 : 19600.0,19850.0 :  19200.0,19950.0
+
              repeat = 0
 
 
@@ -89,7 +89,7 @@ polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.
          outer_radius = 30      
          outer_speed  = 1    
        transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+station_pt = 19000.0, 20100.0 
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -135,7 +135,7 @@ Behavior = BHV_StationKeep
          outer_radius = 30      
          outer_speed  = 1    
        transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+station_pt = 19000.0, 20100.0
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -145,11 +145,12 @@ station_pt = 1680.0, -225.0
          visual_hints = vertex_color = blue 
  }
 
+
 //----------------------------------------------
 Behavior = BHV_AvdColregsV19
 {
   name         = avdcol_
-  pwt          = 150
+  pwt          = 600
   condition    = AVOID = true 
   updates      = CONTACT_INFO// USR_RANGE_REPORT
   idleflag     = AVOIDING = idle
@@ -165,45 +166,14 @@ Behavior = BHV_AvdColregsV19
          extrapolate = true
                decay = 30,60
 
-        giveway_bow_dist = 30
+        giveway_bow_dist = 60
         use_refinery = true
 
-      //pwt_outer_dist = 105
-      pwt_outer_dist = 200
-      pwt_inner_dist = 30
-      completed_dist = 200
-   min_util_cpa_dist = 30
-   max_util_cpa_dist = 105
+      pwt_outer_dist = 155
+      pwt_inner_dist = 80
+      completed_dist = 250
+   min_util_cpa_dist = 80
+   max_util_cpa_dist = 155
            pwt_grade = linear
  bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
-}
-
-//----------------------------------------------
-Behavior = BHV_AvoidCollision
-{
-  name         = ac_
-  pwt          = 300
-  condition    = AVOID = true 
-  updates      = CONTACT_INFO// USR_RANGE_REPORT
-  idleflag     = AVOIDING = idle
-  activeflag   = AVOIDING = active
-  inactiveflag = AVOIDING = inactive
-  runflag      = AVOIDING = running
-  endflag      = AVOIDING = end
-  endflag      = CONTACT_RESOLVED = $[CONTACT],avd
-  templating   = spawn
-
-             contact = to-be-set
-    on_no_contact_ok = true
-         extrapolate = true
-               decay = 30,60
-
-        //pwt_outer_dist = 75
-        pwt_outer_dist = 200
-        pwt_inner_dist = 15
-        completed_dist = 200
-     min_util_cpa_dist = 15
-     max_util_cpa_dist = 75
-             pwt_grade = linear
-   bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
 }

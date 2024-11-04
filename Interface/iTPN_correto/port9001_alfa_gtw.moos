@@ -1,0 +1,45 @@
+//-------------------------------------------------
+// NAME: M. Benjamin, MIT CSAIL
+// FILE: alpha.moos
+//-------------------------------------------------
+
+ServerHost   = 127.0.0.1 //localhost
+ServerPort   = 9001 //sends MOOS data to ROS2
+Community    = gateway
+MOOSTimeWarp = 1
+
+// Forest Lake
+//LatOrigin  = 43.825300 
+//LongOrigin = -70.330400
+
+// MIT Sailing Pavilion (use this one)
+LatOrigin  = 42.358456 
+LongOrigin = -71.087589
+
+//------------------------------------------
+// Antler configuration  block
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB        @ NewConsole = false
+  Run = iMOOSGateway  @ NewConsole = false
+}
+
+//------------------------------------------
+// iMOOSGateway config block
+
+ProcessConfig = iMOOSGateway
+{
+  AppTick  	= 4
+  CommsTick	= 4
+
+  tcp_port = 9502
+	
+	// comma separated moos variables to send to client                                                 
+  forward_to_client =  NAV_HEADING, NAV_X, NAV_Y // DESIRED_HEADING, VIEW_SEGLIST, WPT_INDEX
+  
+  // comma separated moos variables to block from client                                                
+  // block_from_client = DEPLOY
+}
+

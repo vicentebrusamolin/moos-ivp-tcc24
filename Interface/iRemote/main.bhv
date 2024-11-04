@@ -1,0 +1,93 @@
+//--------    FILE: echo.bhv   -------------
+
+initialize   DEPLOY = false
+initialize   RETURN = false
+
+//----------------------------------------------
+Behavior = BHV_Waypoint
+{ 
+  name      = waypt_survey
+  pwt       = 100
+  condition = RETURN = false
+  condition = DEPLOY = true
+  endflag   = RETURN = true
+
+  updates    = WPT_UPDATE
+  perpetual  = true
+//  templating = clone
+
+                lead = 30 
+         lead_damper = 15
+       lead_to_start = true
+               speed = 5  // meters per second
+        capture_line = true
+      capture_radius = 35 
+         slip_radius = 30.0
+	efficiency_measure = all
+
+
+
+             polygon = 500,-1875 : 1500,-2225 : 1500,-2275 : 500,-1925 : 500,-1975 : 1500,-2325 : 1500,-2375 : 500,-2025
+             repeat = 0
+
+
+//	ipf_type = roc
+
+    visual_hints = nextpt_color=dodger_blue
+    visual_hints = nextpt_vertex_size=8
+    visual_hints = nextpt_lcolor=invisible
+    visual_hints = vertex_color=gray40, edge_color=black
+    visual_hints = vertex_size=5, edge_size=1
+    visual_hints = label_color=invisible
+}
+
+//----------------------------------------------
+ Behavior = BHV_StationKeep
+ {
+   // General Behavior Parameters
+   // ---------------------------
+   name         = station-keep          // example
+   pwt          = 100                   // default
+   condition  = RETURN = true
+   condition  = DEPLOY = true
+   inactiveflag = STATIONING = false    // example
+   activeflag   = STATIONING = true     // example
+
+
+   // Parameters specific to this behavior
+   // ------------------------------------
+      center_activate = false   // default
+   hibernation_radius = -1      // default
+         inner_radius = 15       // default
+         outer_radius = 30      // default
+         outer_speed  = 1     // default
+       transit_speed  = 5    // default
+           station_pt = 200,-1900     // default
+           swing_time = 0       // default
+
+         visual_hints = vertex_size  = 1           // default
+         visual_hints = edge_color   = light_blue  // default
+         visual_hints = edge_size    = 1           // default
+         visual_hints = label_color  = black      
+         visual_hints = vertex_color = blue 
+ }
+
+//----------------------------------------------
+Behavior=BHV_ConstantSpeed
+{
+  name       = const_speed
+  pwt        = 200
+  condition  = SPD=true
+  condition  = DEPLOY = true
+  perpetual  = true
+  updates    = SPEED_UPDATE
+  endflag    = SPD = false
+
+     speed = 0.5
+		 duration = 10
+		 duration_reset = CONST_SPD_RESET=true
+	
+}
+
+	// uPokeDB alpha.moos SPEED_UPDATE=speed=0.7#duration=20
+	// uPokeDB alpha.moos RETURN_UPDATE=slip_radius=7

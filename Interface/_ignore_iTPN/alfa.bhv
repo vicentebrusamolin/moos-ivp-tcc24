@@ -6,6 +6,9 @@ initialize   END  = false
 initialize   STATION_KEEP = false
 initialize   SEARCH  = true
 initialize   AVOID   = true
+initialize   BEGIN1  = true
+initialize   BEGIN2  = false
+initialize   BEGIN3  = false
 
 set MODE = ACTIVE {
   DEPLOY = true
@@ -29,7 +32,7 @@ set MODE = ENDING {
 set MODE = SEARCHING {
   MODE = ACTIVE
   SEARCH = true
-}   
+}
 
 //----------------------------------------------
 Behavior = BHV_Waypoint
@@ -43,10 +46,10 @@ Behavior = BHV_Waypoint
   perpetual  = true
 //  templating = clone
 
-                lead = 30 
+                lead = 30
          lead_damper = 15
        lead_to_start = true
-               speed = 5  // meters per second
+               speed = 4  // meters per second
         capture_line = true
       capture_radius = 35 
          slip_radius = 30.0
@@ -54,9 +57,8 @@ Behavior = BHV_Waypoint
 
 
 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
-polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.0,-1095.0 : 855.0,-960.0 : 1020.0,-810.0 : 1245.0,-720.0 : 1455.0,-600.0 : 1560.0,-465.0 : 1560.0,-375.0 
-             repeat = 0
+polygon = 1100,-900: 1600,-1050: 1600,-1100: 1100,-950: 1100,-1000: 1600,-1150
+             repeat = 10000
 
 
 //	ipf_type = roc
@@ -75,7 +77,7 @@ polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.
    // General Behavior Parameters
    // ---------------------------
    name         = end-station         // example
-   pwt          = 100                   // default
+   pwt          = 500                   // default
    condition = MODE==ENDING
    inactiveflag = STATIONING = false    // example
    activeflag   = STATIONING = true     // example
@@ -88,8 +90,8 @@ polygon = 1545.0,-1500.0 : 1305.0,-1410.0 : 975.0,-1320.0 : 825.0,-1245.0 : 780.
          inner_radius = 15       
          outer_radius = 30      
          outer_speed  = 1    
-       transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+       transit_speed  = 2    
+station_pt = 2000, -1300.0 
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -132,10 +134,10 @@ Behavior = BHV_StationKeep
       center_activate = false   // default
    hibernation_radius = -1     // default
          inner_radius = 15       
-         outer_radius = 30      
+         outer_radius = 60      
          outer_speed  = 1    
-       transit_speed  = 5    
-station_pt = 1680.0, -225.0 
+       transit_speed  = 7    
+station_pt = 900.0, -900.0 
            swing_time = 0       // default
 
          visual_hints = vertex_size  = 1           // default
@@ -168,8 +170,7 @@ Behavior = BHV_AvdColregsV19
         giveway_bow_dist = 30
         use_refinery = true
 
-      //pwt_outer_dist = 105
-      pwt_outer_dist = 200
+      pwt_outer_dist = 105
       pwt_inner_dist = 30
       completed_dist = 200
    min_util_cpa_dist = 30
@@ -198,8 +199,7 @@ Behavior = BHV_AvoidCollision
          extrapolate = true
                decay = 30,60
 
-        //pwt_outer_dist = 75
-        pwt_outer_dist = 200
+        pwt_outer_dist = 75
         pwt_inner_dist = 15
         completed_dist = 200
      min_util_cpa_dist = 15

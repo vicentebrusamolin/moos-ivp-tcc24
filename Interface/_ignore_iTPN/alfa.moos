@@ -21,31 +21,48 @@ ProcessConfig = ANTLER
 
   Run = MOOSDB          @ NewConsole = false
   Run = uXMS            @ NewConsole = false
-  //Run = pLogger      @ NewConsole = false
+  // Run = pLogger      @ NewConsole = false
   Run = pHelmIvP        @ NewConsole = false
-  Run = pNodeReporter   @ NewConsole = false
-  // Run = ./iPydyna.py    @ NewConsole = false
-  Run = ./iSMH.py    @ NewConsole = false
-  // Run = python /home/vicente/TCC/Python/iPydyna.py /home/vicente/TCC/Interface/model_ship.moos	@ NewConsole = false
+  Run = ./iPydyna2.py    @ NewConsole = false
+  //Run = ./iTPN.py    @ NewConsole = false
+  Run = ./iSMH2.py    @ NewConsole = true
   Run = ./pTrajectPID.py @ NewConsole = false
-  // Run = python pTrajectPID.py /home/vicente/TCC/Interface/model_ship.moos    @ NewConsole = false	 
   // Run = ./plotter.py    @ NewConsole = false
-  // Run = pSimIMU   @ NewConsole = false  // comentei a aqui -->
+  // Run = pSimIMU   @ NewConsole = false
   // Run = pSimGPS    @ NewConsole = false
   // Run = pSimDVL    @ NewConsole = false
   // Run = pSimGyro    @ NewConsole = false
-  // Run = pSensor    @ NewConsole = false // até aqui <--
-  //Run = iRemoteMod    @ NewConsole = true
-  Run = pShare @ NewConsole = false
-  Run = pHostInfo       @ NewConsole = false
-  Run = uFldNodeBroker  @ NewConsole = false
-  Run = uTimerScript       @ NewConsole = false ~ uTimerScript_PING
-  Run = pContactMgrV20    @ NewConsole = false
-  Run = uSimRadar        @ NewConsole = false
-  Run = uSimLidar        @ NewConsole = false
+  // Run = pSensor    @ NewConsole = false
+  // Run = iRemoteMod    @ NewConsole = false
+  Run = pMarineViewer   @ NewConsole = false, ExtraProcessParams=one
+  Run = uProcessWatch  @ NewConsole = false
+  Run = pNodeReporter   @ NewConsole = false
+
+   one = --size=800x600
 
 }
 
+
+//------------------------------------------
+// uProcessWatch config block
+
+ProcessConfig = uProcessWatch                                   
+{                                                               
+   AppTick   = 4                                                 
+   CommsTick = 4                                                 
+                                                               
+   watch_all = true   // The default is true.                    
+                                                                
+  nowatch = uXMS*,                                                
+                                                               
+  allow_retractions = true   // Always allow run-warnings to be 
+                       // retracted if proc re-appears    
+                                                                
+  // A negative value means summary only when status changes.   
+  summary_wait = 10 // Seconds. Default is -1.                  
+                                                             
+  post_mapping = PROC_WATCH_FULL_SUMMARY, UPW_FULL_SUMMARY      
+} 
 
 //------------------------------------------
 // uXMS config block
@@ -54,98 +71,68 @@ ProcessConfig = uXMS
 {
   AppTick   = 4
   CommsTick = 4
-  //var    =   USR_RANGE_REQUEST, USR_RANGE_REPORT, USL_RANGE_REQUEST, USL_RANGE_REPORT
+  var    =   REAL_HEADING, REAL_SPEED, REAL_X, REAL_Y
+  display_source = true
   //display_all = true
-  source = uSimRadar, pContactMgrV20, uSimLidar
+  //source = iTPN
 
 }
 
-//---------------------------------------------------------
-// uSimRadar Config Block
-ProcessConfig = uSimRadar
+//------------------------------------------
+// pMarineViewer config block
+
+ProcessConfig = pMarineViewer
 {
-  AppTick   = 4
-  CommsTick = 4
+  AppTick    = 4
+  CommsTick  = 4
 
-  push_distance = alfa = 40000
-  pull_distance = alfa = 40000
-  ping_wait     = alfa = 0 
-  //ping_color    = white
-  //echo_color    = chartreuse
+  tiff_file            = itaguai.tif
 
-  report_vars   =  short
-  ground_truth = true
+  set_pan_x            = -90
+  set_pan_y            = -220
+  zoom                 = 2
+  vehicle_shape_scale  = 2.5
+  hash_delta           = 100
+  hash_shade           = 0.4
+  hash_viewable        = true
 
-  // Configuring Artificial Noise 
-  rn_algorithm = gaussian                        
-  rn_gaussian_sigma   = 0.03
+  trails_point_size   = 2
+  trails_color         = red
+  trails_length       = 200
+  vehicles_name_mode  = names
+  vehicles_name_color = black
+  center_view         = active
 
-}
+  //vcolor = alpha=dodgerblue
 
-//---------------------------------------------------------
-// uSimRadar Config Block
-ProcessConfig = uSimLidar
-{
-  AppTick   = 4
-  CommsTick = 4
+  // Appcast configuration
+  appcast_height       = 75
+  appcast_width        = 30
+  appcast_viewable     = true
+  appcast_color_scheme = indigo
+  nodes_font_size      = medium
+  procs_font_size      = medium
+  appcast_font_size    = small
 
-  push_distance = alfa = 1000
-  pull_distance = alfa = 1000
-  ping_wait     = alfa = 0 
-  //ping_color    = white
-  //echo_color    = chartreuse
+  //datum_viewable = true
+  //datum_size     = 18
+  //gui_size = small
 
-  report_vars   =  short
-  ground_truth = true
+  button_one   = DEPLOY  # DEPLOY=true 
+  button_one   = MOOS_MANUAL_OVERRIDE=false 
+  button_one   = RETURN=false # STATION_KEEP=false
+  button_one   = END=false
 
-  // Configuring Artificial Noise   
-  rn_algorithm = gaussian                        
-  rn_gaussian_sigma   = 0.05
+  button_two   = RETURN  # RETURN=true
+  button_two   = STATION_KEEP=false
+  button_two   = END=false
 
-}
+  button_three = STATION  # STATION_KEEP=true
 
+  button_four = END # END=true
+  button_four  = RETURN=false # STATION_KEEP=false
 
-//---------------------------------------------------------
-// pShare Config Block
-
-ProcessConfig = pShare
-{
-  AppTick    = 2
-  CommsTick  = 2
-
-  input = route =  localhost:9201
-}
-
-//--------------------------------------------------
-// pHostInfo configuration block
-
-ProcessConfig = pHostInfo
-{
-  AppTick 	= 1
-  CommsTick 	= 1
-
-   default_hostip_force = localhost
-
-}
-
-//--------------------------------------------------
-// uFldNodeBroker configuration block from plugin
-
-ProcessConfig = uFldNodeBroker
-{
-  AppTick   = 1
-  CommsTick = 1
-
-  try_shore_host = pshare_route=localhost:9200
-
-  bridge = src=VIEW_POLYGON
-  bridge = src=VIEW_POINT
-  bridge = src=VIEW_SEGLIST
-  bridge = src=APPCAST
-  bridge = src=NODE_REPORT_LOCAL,  alias=NODE_REPORT
-  bridge = src=NODE_MESSAGE_LOCAL, alias=NODE_MESSAGE
-  //bridge =  src=USL_RANGE_REQUEST
-  //bridge =  src=USR_RANGE_REQUEST
+  infocast_viewable=true
 }
 
 //------------------------------------------------
@@ -157,19 +144,7 @@ ProcessConfig = iPydyna
    CommsTick = 4
 START_X = 900.0 
 START_Y = -900.0 
-START_HEADING = 90.0 
-}
-
-//------------------------------------------------
-// iSMH config block
-
-ProcessConfig = iSMH
-{
-   AppTick   = 4
-   CommsTick = 4
-START_X = 900.0 
-START_Y = -900.0 
-START_HEADING = 90.0 
+START_HEADING = 090.0 
 }
 
 //------------------------------------------------
@@ -179,14 +154,14 @@ ProcessConfig = pTrajectPID
 {
    AppTick   = 1
    CommsTick = 1
-   yaw_kp = 3.97
-   yaw_ki = 0.269
-   yaw_kd = 3.95
-   max_rudder = 35
-   spd_kp = 4.944
-   spd_ki = 0.1629
+   yaw_kp = 3.6
+   yaw_ki = 0.9
+   yaw_kd = 3.6
+   max_rudder = 30
+   spd_kp = 3.044
+   spd_ki = 0.103
    spd_kd = 0
-   max_rotation = 17.5
+   max_rotation = 25.6
 }
 
 //------------------------------------------------
@@ -265,9 +240,13 @@ ProcessConfig = pLogger
   // For variables that are published in a bundle on their first post,
   // explicitly declare their logging request
   
-  Log = USR_RANGE_REPORT @ 0 NOSYNC
-  Log = USR_RANGE_REPORT_GT @ 0 NOSYNC
-  Log = USL_RANGE_REPORT @ 0 NOSYNC
+  Log = DESIRED_SPEED @ 0 NOSYNC
+  Log = REAL_SPEED @ 0 NOSYNC
+  Log = DESIRED_ROTATION @ 0 NOSYNC
+  Log = DESIRED_HEADING @ 0 NOSYNC
+  Log = REAL_HEADING  @ 0 NOSYNC
+  Log = DESIRED_RUDDER @ 0 NOSYNC
+
 
   File = Log
   FileTimeStamp = false
@@ -297,8 +276,7 @@ ProcessConfig = pHelmIvP
   bhv_dir_not_found_ok = true
   ok_skew = any
 
-  //behaviors  = alfa.bhv
-  behaviors  = model_ship.bhv
+  behaviors  = alfa.bhv
   domain     = course:0:359:360
   domain     = speed:0:7:99
 }
