@@ -4,8 +4,10 @@
 //-------------------------------------------------
 
 ServerHost   = 127.0.0.1 //localhost
-ServerPort   = 9001 //sends MOOS data to ROS2
+ServerPort   = 9000 //sends NODE_REPORT's to mothership.moos
 Community    = gateway
+//----  Next Line was commented and replaced with a command line overload ---- //
+//MOOSTimeWarp = 1    (default)
 MOOSTimeWarp = 1
 
 // Forest Lake
@@ -34,12 +36,13 @@ ProcessConfig = iMOOSGateway
   AppTick  	= 4
   CommsTick	= 4
 
-  tcp_port = 9502
+  tcp_port = 9501
 	
 	// comma separated moos variables to send to client                                                 
-  forward_to_client =  NAV_HEADING, NAV_X, NAV_Y, NAV_Z, IMU_ROLL, IMU_PITCH, NAV_SPEED // DESIRED_HEADING, VIEW_SEGLIST, WPT_INDEX
+  forward_to_client = DB_TIME // DESIRED_HEADING, VIEW_SEGLIST, WPT_INDEX
   
   // comma separated moos variables to block from client                                                
   // block_from_client = DEPLOY
 }
+
 

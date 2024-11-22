@@ -7,7 +7,9 @@ ServerHost = localhost
 ServerPort = 9000main
 Community  = mothership
 
-MOOSTimeWarp = 10
+//----  Next Line was commented and replaced with a command line overload ---- //
+//MOOSTimeWarp = 10    (default)
+MOOSTimeWarp = 1
 
 // Sepetiba
 LatOrigin  = -23.125
@@ -96,8 +98,7 @@ ProcessConfig = pMarineViewer
   set_pan_x            = -90
   set_pan_y            = -220
   zoom                 = 2
-  //vehicle_shape_scale  = 2.5
-  vehicle_shape_scale  = 2.0
+  vehicle_shape_scale  = 2.5
   hash_delta           = 100
   hash_shade           = 0.4
   hash_viewable        = true
@@ -157,3 +158,4 @@ ProcessConfig = uFldNodeComms
                 groups = true
   view_node_rpt_pulses = false
 }
+

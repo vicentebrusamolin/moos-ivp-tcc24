@@ -92,10 +92,9 @@ class Ship(pymoos.comms):
         self.sendMOSS('NAV_HEADING', self.real_heading)
         self.sendMOSS('NAV_X', self.real_x)
         self.sendMOSS('NAV_Y', self.real_y)
-        #self.sendMOSS('NAV_SPEED', self.real_speed)
-        #self.sendMOSS('NAV_HEADING', self.real_heading)
-        #self.sendMOSS('NAV_X', self.real_x)
-        #self.sendMOSS('NAV_Y', self.real_y)
+        self.sendMOSS('IMU_ROLL', self.roll_)
+        self.sendMOSS('IMU_PITCH', self.pitch_)
+
 
     # def calculate_heading(self,yaw):
     #     real_heading = 0print(self.navio)
@@ -117,6 +116,8 @@ class Ship(pymoos.comms):
         self.real_heading = self.navio.angular_position[2]
         yaw=-deg2rad(self.real_heading)
         self.real_speed = self.navio.linear_velocity[0]*cos(yaw)-self.navio.linear_velocity[0]*sin(yaw)
+        self.roll_ = self.navio.angular_position[0]
+        self.pitch_ = self.self.navio.angular_position[1]
 
     def updateSMH(self):    
         # to SMH

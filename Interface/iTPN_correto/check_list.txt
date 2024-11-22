@@ -1,3 +1,5 @@
+lembrar de ativar o ambiente virtual: conda activate tccenv_conda
+
 Rodar:
 
 - alfa.moos (missão principal)

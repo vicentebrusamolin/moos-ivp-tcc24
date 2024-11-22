@@ -10,9 +10,8 @@ Community  = mothership
 MOOSTimeWarp = 10
 
 // Sepetiba
-LatOrigin  = -23.125
-LongOrigin = -44.016667
-
+LatOrigin  = -22.93705
+LongOrigin = -43.83953
 //------------------------------------------
 // Antler configuration  block
 ProcessConfig = ANTLER
@@ -93,11 +92,10 @@ ProcessConfig = pMarineViewer
 
   tiff_file            = itaguai.tif
 
-  set_pan_x            = -90
-  set_pan_y            = -220
+  set_pan_x            = 200000
+  set_pan_y            = 1111110
   zoom                 = 2
-  //vehicle_shape_scale  = 2.5
-  vehicle_shape_scale  = 2.0
+  vehicle_shape_scale  = 2.5
   hash_delta           = 100
   hash_shade           = 0.4
   hash_viewable        = true

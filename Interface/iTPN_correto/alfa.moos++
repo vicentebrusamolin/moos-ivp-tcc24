@@ -7,7 +7,9 @@ ServerHost = localhost
 ServerPort = 9001
 Community  = alfa
 
-MOOSTimeWarp = 10
+//----  Next Line was commented and replaced with a command line overload ---- //
+//MOOSTimeWarp = 10    (default)
+MOOSTimeWarp = 1
 
 // Sepetiba
 LatOrigin  = -23.125
@@ -23,9 +25,8 @@ ProcessConfig = ANTLER
   //Run = uXMS            @ NewConsole = false
   //Run = pLogger      @ NewConsole = false
   Run = pHelmIvP        @ NewConsole = false
-  //Run = ./iPydyna2.py    @ NewConsole = false
+  Run = ./iPydyna2.py    @ NewConsole = false
   //Run = ./iSMH3.py    @ NewConsole = true 	// esse seria o iSMH2.py do Caldas
-  Run = ./iSMHIMU.py    @ NewConsole = true
   //Run = ./iSMH.py    @ NewConsole = true	//usar esse para simulação com alfa.moos
   Run = ./pTrajectPID.py @ NewConsole = false
   // Run = ./plotter.py    @ NewConsole = false
@@ -42,7 +43,7 @@ ProcessConfig = ANTLER
   Run = pShare @ NewConsole = false
   Run = pHostInfo       @ NewConsole = false
   Run = uFldNodeBroker  @ NewConsole = false
-  Run = pContactMgrV20     @ NewConsole = true
+  Run = pContactMgrV20     @ NewConsole = false
 
    one = --size=800x600
 
@@ -106,13 +107,11 @@ ProcessConfig = pTrajectPID
    yaw_kp = 3.6
    yaw_ki = 0.9
    yaw_kd = 3.6
-   //max_rudder = 30
-   max_rudder = 10
+   max_rudder = 30
    spd_kp = 3.044
    spd_ki = 0.103
    spd_kd = 0
-   //max_rotation = 25.6
-   max_rotation = 15
+   max_rotation = 25.6
 }
 
 //------------------------------------------------
@@ -229,9 +228,7 @@ ProcessConfig = pHelmIvP
 
   behaviors  = alfa2.bhv
   domain     = course:0:359:360
-  //domain     = speed:0:7:99
-  domain     = speed:0:2.5:99
-  //max_steer  = 10
+  domain     = speed:0:7:99
 }
 
 //------------------------------------------
@@ -241,8 +238,6 @@ ProcessConfig = pNodeReporter
 {
   AppTick    = 2
   CommsTick	 = 2
-  //AppTick    = 1
-  //CommsTick	 = 1
 
   platform_type   = KAYAK
   platform_color  = red
@@ -260,12 +255,11 @@ ProcessConfig = pContactMgrV20
   AppTick   = 10
   CommsTick = 10
 
-  decay = 15,30
+  decay = 30,60
 
   alert_verbose = true
 
-  //contact_max_age = 3600
-  contact_max_age = 10
+  contact_max_age = 3600
   display_radii   = true
 
   alert_range_color = gray70
@@ -374,4 +368,5 @@ ProcessConfig = pMarineViewer
 
   infocast_viewable=true
 }
+
 

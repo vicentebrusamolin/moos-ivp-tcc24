@@ -46,7 +46,7 @@ Behavior = BHV_Waypoint
                 lead = 30 
          lead_damper = 15
        lead_to_start = true
-               speed = 4  // meters per second
+               speed = 2.5  // meters per second
         capture_line = true
       capture_radius = 35 
          slip_radius = 30.0
@@ -55,6 +55,7 @@ Behavior = BHV_Waypoint
 
 
 polygon = 19200.0,20200.0: 19600.0,20100.0 : 19600.0,20050.0 : 19200.0,20150.0 : 19200.0,20100.0 : 19600.0,20000.0 : 19600.0,19950.0 : 19200.0,20050.0 :  19200.0,20000.0 : 19600.0,19900.0 : 19600.0,19850.0 :  19200.0,19950.0
+//polygon = 19200.0,20200.0: 19600.0,20100.0 : 20000.0,20000.0
 
              repeat = 0
 
@@ -147,6 +148,68 @@ station_pt = 19000.0, 20100.0
 
 
 //----------------------------------------------
+//Behavior = BHV_AvdColregsV19
+//{
+//  name         = avdcol_
+//  pwt          = 600
+//  condition    = AVOID = true 
+//  updates      = CONTACT_INFO// USR_RANGE_REPORT
+//  idleflag     = AVOIDING = idle
+//  activeflag   = AVOIDING = active
+//  inactiveflag = AVOIDING = inactive
+//  runflag      = AVOIDING = running
+//  endflag      = AVOIDING = end
+//  endflag      = CONTACT_RESOLVED = $[CONTACT],avd
+//  templating   = spawn
+//
+//             contact = to-be-set
+//    on_no_contact_ok = true
+//         extrapolate = true
+//         //extrapolate = false
+//               decay = 15,30
+//
+//        giveway_bow_dist = 60
+//        use_refinery = true
+//
+//      pwt_outer_dist = 200 //mudei de 155 para 200
+//      pwt_inner_dist = 100  //mudei de 80 para 100
+//      completed_dist = 300  //mudei de 250 para 300
+//   min_util_cpa_dist = 100 //mudei de 80 para 100
+//   max_util_cpa_dist = 200 //mudei de 155 para 200
+//           pwt_grade = linear
+// bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
+//}
+
+//----------------------------------------------
+//Behavior = BHV_AvoidCollision
+//{
+//  name         = ac_
+//  pwt          = 300
+//  condition    = AVOID = true 
+//  updates      = CONTACT_INFO// USR_RANGE_REPORT
+//  idleflag     = AVOIDING = idle
+//  activeflag   = AVOIDING = active
+//  inactiveflag = AVOIDING = inactive
+//  runflag      = AVOIDING = running
+//  endflag      = AVOIDING = end
+//  endflag      = CONTACT_RESOLVED = $[CONTACT],avd
+//  templating   = spawn
+//
+//             contact = to-be-set
+//    on_no_contact_ok = true
+//         extrapolate = false
+//               decay = 15,30
+//
+//        pwt_outer_dist = 180
+//        pwt_inner_dist = 150
+//        completed_dist = 250
+//     min_util_cpa_dist = 100
+//     max_util_cpa_dist = 200
+//             pwt_grade = linear
+//   bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
+//}
+
+//----------------------------------------------
 Behavior = BHV_AvdColregsV19
 {
   name         = avdcol_
@@ -164,16 +227,16 @@ Behavior = BHV_AvdColregsV19
              contact = to-be-set
     on_no_contact_ok = true
          extrapolate = true
-               decay = 30,60
+               decay = 15,30
 
-        giveway_bow_dist = 60
+        giveway_bow_dist = 70
         use_refinery = true
 
-      pwt_outer_dist = 155
-      pwt_inner_dist = 80
-      completed_dist = 250
-   min_util_cpa_dist = 80
-   max_util_cpa_dist = 155
+        pwt_outer_dist = 155
+        pwt_inner_dist = 115
+        completed_dist = 250
+     min_util_cpa_dist = 100 //testar 80
+     max_util_cpa_dist = 155
            pwt_grade = linear
- bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
+    bearing_line_config = white:0, green:0.65, yellow:0.8, red:1.0
 }
